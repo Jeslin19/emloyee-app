@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: attendance-container
-          image: YOUR_ACR_NAME.azurecr.io/attendance-service:v1
+          image: acrdemo1.azurecr.io/attendance-service:v1
 
           ports:
             - containerPort: 5002
