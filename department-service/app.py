@@ -1,44 +1,28 @@
-from flask import Flask, jsonify
+import os
+from flask import Flask
 
 app = Flask(__name__)
 
-departments = [
+DEPARTMENTS = [
     {"id": 1, "name": "IT"},
     {"id": 2, "name": "HR"},
-    {"id": 3, "name": "Finance"}
 ]
 
 @app.route("/")
 def home():
-    return """
-    <html><head><title>Department Service</title>
-    <style>body{font-family:Arial;text-align:center;margin-top:80px;background:#f0f2f5}
-    h1{color:#2c3e50} a{display:inline-block;margin:10px;padding:12px 25px;background:#007bff;color:white;text-decoration:none;border-radius:8px}</style>
-    </head><body>
-    <h1>👋 Welcome to Department Service</h1>
-    <p>Employee Management System - Running on Azure AKS</p>
-    <a href="/departments">View Departments</a>
-    <a href="/employees">View Employees</a>
-    <a href="/attendance">View Attendance</a>
-    </body></html>
-    """
+    """Welcome page for Department Service."""
+    return "<h1 style='text-align:center;margin-top:100px;font-family:Arial'>👋 Welcome to Department Page</h1>"
 
 @app.route("/departments")
 def get_departments():
-    rows = "".join([f"<tr><td>{d['id']}</td><td>{d['name']}</td></tr>" for d in departments])
-    return f"""
-    <html><head><title>Departments</title>
-    <style>body{{font-family:Arial;text-align:center;margin-top:50px}} table{{margin:auto;border-collapse:collapse}} td,th{{border:1px solid #ccc;padding:10px 30px}} th{{background:#007bff;color:white}}</style>
-    </head><body>
-    <h1>🏢 Departments</h1>
-    <table><tr><th>ID</th><th>Name</th></tr>{rows}</table>
-    <br><a href="/">⬅ Back to Home</a>
-    </body></html>
-    """
+    """Return departments list."""
+    items = "".join(f"<li>{d['name']}</li>" for d in DEPARTMENTS)
+    return f"<h1 style='text-align:center;font-family:Arial'>Welcome to Department Page</h1><ul style='text-align:center;list-style:none'>{items}</ul>"
 
 @app.route("/health")
 def health():
-    return jsonify({"status": "healthy"})
+    """Health check."""
+    return {"status": "healthy"}
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")))
