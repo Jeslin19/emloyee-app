@@ -1,21 +1,24 @@
 from flask import Flask
+
 app = Flask(__name__)
 
-departments = [
+DEPARTMENTS = [
     {"id": 1, "name": "IT"},
     {"id": 2, "name": "HR"},
     {"id": 3, "name": "Finance"}
 ]
 
-@app.route('/')
-@app.route('/departments')
+@app.route("/")
 def home():
-    html = "<h1><b>Hello, Welcome to Department Service</b></h1>"
-    html += "<h2>Department List:</h2><ul>"
-    for d in departments:
-        html += f"<li><b>{d['name']}</b> - ID: {d['id']}</li>"
-    html += "</ul>"
-    return html
+    return "<h1>Welcome to Department Service</h1>"
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+@app.route("/departments")
+def get_departments():
+    return DEPARTMENTS
+
+@app.route("/health")
+def health():
+    return {"service": "Department Service", "status": "healthy"}
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5001)
