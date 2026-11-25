@@ -1,44 +1,28 @@
-from flask import Flask, jsonify
+import os
+from flask import Flask
 
 app = Flask(__name__)
 
-employees = [
-    {"id": 1, "name": "John Doe", "department": "IT"},
-    {"id": 2, "name": "Jane Smith", "department": "HR"},
-    {"id": 3, "name": "Mike Johnson", "department": "Finance"}
+EMPLOYEES = [
+    {"id": 1, "name": "John", "department": "IT"},
+    {"id": 2, "name": "David", "department": "HR"},
 ]
 
 @app.route("/")
 def home():
-    return """
-    <html><head><title>Employee Service</title>
-    <style>body{font-family:Arial;text-align:center;margin-top:80px;background:#f0f2f5}
-    h1{color:#2c3e50} a{display:inline-block;margin:10px;padding:12px 25px;background:#007bff;color:white;text-decoration:none;border-radius:8px}</style>
-    </head><body>
-    <h1>👋 Welcome to Employee Page</h1>
-    <p>Employee Management System - Running on Azure AKS</p>
-    <a href="/employees">View Employees</a>
-    <a href="/departments">View Departments</a>
-    <a href="/attendance">View Attendance</a>
-    </body></html>
-    """
+    """Welcome page for Employee Service."""
+    return "<h1 style='text-align:center;margin-top:100px;font-family:Arial'>👋 Welcome to Employee Page</h1>"
 
 @app.route("/employees")
 def get_employees():
-    rows = "".join([f"<tr><td>{e['id']}</td><td>{e['name']}</td><td>{e['department']}</td></tr>" for e in employees])
-    return f"""
-    <html><head><title>Employees</title>
-    <style>body{{font-family:Arial;text-align:center;margin-top:50px}} table{{margin:auto;border-collapse:collapse}} td,th{{border:1px solid #ccc;padding:10px 30px}} th{{background:#28a745;color:white}}</style>
-    </head><body>
-    <h1>👨‍💼 Employees</h1>
-    <table><tr><th>ID</th><th>Name</th><th>Department</th></tr>{rows}</table>
-    <br><a href="/">⬅ Back to Home</a>
-    </body></html>
-    """
+    """Return employees list."""
+    items = "".join(f"<li>{e['name']} - {e['department']}</li>" for e in EMPLOYEES)
+    return f"<h1 style='text-align:center;font-family:Arial'>Welcome to Employee Page</h1><ul style='text-align:center;list-style:none'>{items}</ul>"
 
 @app.route("/health")
 def health():
-    return jsonify({"status": "healthy"})
+    """Health check."""
+    return {"status": "healthy"}
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5002)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5002")))
