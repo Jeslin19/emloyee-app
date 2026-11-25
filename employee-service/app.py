@@ -13,7 +13,16 @@ def home():
 
 @app.route("/employees")
 def get_employees():
-    return EMPLOYEES
+    items = "".join(
+        f"<li>{e['name']} - {e['department']}</li>"
+        for e in EMPLOYEES
+    )
+
+    return f"""
+    <h1 style="text-align:center">Welcome to Employee Service</h1>
+    <h2>Employee Details</h2>
+    <ul>{items}</ul>
+    """
 
 @app.route("/health")
 def health():
