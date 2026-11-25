@@ -1,28 +1,21 @@
-import os
 from flask import Flask
-
 app = Flask(__name__)
 
-DEPARTMENTS = [
+departments = [
     {"id": 1, "name": "IT"},
     {"id": 2, "name": "HR"},
+    {"id": 3, "name": "Finance"}
 ]
 
-@app.route("/")
+@app.route('/')
+@app.route('/departments')
 def home():
-    """Welcome page for Department Service."""
-    return "<h1 style='text-align:center;margin-top:100px;font-family:Arial'>👋 Welcome to Department Page</h1>"
+    html = "<h1><b>Hello, Welcome to Department Service</b></h1>"
+    html += "<h2>Department List:</h2><ul>"
+    for d in departments:
+        html += f"<li><b>{d['name']}</b> - ID: {d['id']}</li>"
+    html += "</ul>"
+    return html
 
-@app.route("/departments")
-def get_departments():
-    """Return departments list."""
-    items = "".join(f"<li>{d['name']}</li>" for d in DEPARTMENTS)
-    return f"<h1 style='text-align:center;font-family:Arial'>Welcome to Department Page</h1><ul style='text-align:center;list-style:none'>{items}</ul>"
-
-@app.route("/health")
-def health():
-    """Health check."""
-    return {"status": "healthy"}
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")))
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5003)
