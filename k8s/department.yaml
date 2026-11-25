@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: department-container
-          image: acrdemo1.azurecr.io/department-service:v2
+          image: acrdemo1.azurecr.io/department-service:v4
 
           ports:
             - containerPort: 5001
