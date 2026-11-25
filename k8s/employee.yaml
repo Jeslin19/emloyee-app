@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: employee
-          image: acrdemo1.azurecr.io/employee-service:v1
+          image: acrdemo1.azurecr.io/employee-service:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
