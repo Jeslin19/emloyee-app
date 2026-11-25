@@ -1,4 +1,3 @@
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -7,28 +6,33 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+    - http:
       paths:
-      - path: /employees
+            - path: /employees
         pathType: Prefix
         backend:
           service:
             name: employee-service
             port:
               number: 80
-
-      - path: /departments
+            - path: /departments
         pathType: Prefix
         backend:
           service:
             name: department-service
             port:
               number: 80
-
-      - path: /attendance
+            - path: /attendance
         pathType: Prefix
         backend:
           service:
             name: attendance-service
+            port:
+              number: 80
+            - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: department-service
             port:
               number: 80
