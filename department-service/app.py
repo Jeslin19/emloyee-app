@@ -10,11 +10,21 @@ DEPARTMENTS = [
 
 @app.route("/")
 def home():
-    return "<h1>Welcome to Department Service</h1>"
+    return """
+    <h1 style="text-align:center">Welcome to Department Service</h1>
+    <h2 style="text-align:center">Department Details</h2>
+    """
 
 @app.route("/departments")
 def get_departments():
-    return DEPARTMENTS
+    items = "".join(
+        f"<li>{d['name']}</li>" for d in DEPARTMENTS
+    )
+    return f"""
+    <h1 style="text-align:center">Welcome to Department Service</h1>
+    <h2>Department List</h2>
+    <ul>{items}</ul>
+    """
 
 @app.route("/health")
 def health():
